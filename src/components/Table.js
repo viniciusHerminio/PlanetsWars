@@ -48,13 +48,10 @@ function Table() {
           ? '' : (gitRepo.results).map((planet, index) => {
             const {
               name,
-              rotation_period,
-              orbital_period,
               diameter,
               climate,
               gravity,
               terrain,
-              surface_water,
               population,
               films,
               created,
@@ -65,13 +62,13 @@ function Table() {
               <tbody key={ index }>
                 <tr>
                   <td>{ name }</td>
-                  <td>{ rotation_period }</td>
-                  <td>{ orbital_period }</td>
+                  <td>{ planet.rotation_period }</td>
+                  <td>{ planet.orbital_period }</td>
                   <td>{ diameter }</td>
                   <td>{ climate }</td>
                   <td>{ gravity }</td>
                   <td>{ terrain }</td>
-                  <td>{ surface_water }</td>
+                  <td>{ planet.surface_water }</td>
                   <td>{ population }</td>
                   <td>{ films }</td>
                   <td>{ created }</td>
