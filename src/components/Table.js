@@ -3,13 +3,14 @@ import fecthAPI from '../services/fetchApi';
 
 function Table() {
   const [isLoading, setIsLoading] = useState(false);
+  const [gitRepo, setGitRepo] = useState([]);
 
   const fetchData = async () => {
     console.log('montou!');
     try {
       setIsLoading(true);
       const result = await fecthAPI();
-      console.log(result);
+      setGitRepo(result);
     } catch (error) {
       console.log(error);
     } finally {
@@ -39,8 +40,47 @@ function Table() {
             <th>Population</th>
             <th>Films</th>
             <th>Created</th>
+            <th>Edited</th>
+            <th>URL</th>
           </tr>
         </thead>
+        {gitRepo.length === 0
+          ? '' : (gitRepo.results).map((planet, index) => {
+            const {
+              name,
+              rotation_period,
+              orbital_period,
+              diameter,
+              climate,
+              gravity,
+              terrain,
+              surface_water,
+              population,
+              films,
+              created,
+              edited,
+              url,
+            } = planet;
+            return (
+              <tbody key={ index }>
+                <tr>
+                  <td>{ name }</td>
+                  <td>{ rotation_period }</td>
+                  <td>{ orbital_period }</td>
+                  <td>{ diameter }</td>
+                  <td>{ climate }</td>
+                  <td>{ gravity }</td>
+                  <td>{ terrain }</td>
+                  <td>{ surface_water }</td>
+                  <td>{ population }</td>
+                  <td>{ films }</td>
+                  <td>{ created }</td>
+                  <td>{ edited }</td>
+                  <td>{ url }</td>
+                </tr>
+              </tbody>
+            );
+          })}
       </table>
     </div>
   );
