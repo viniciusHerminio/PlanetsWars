@@ -1,15 +1,24 @@
-import { createContext, useState } from 'react';
+import { createContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
 export const SearchContext = createContext();
 
 function SearchProvider({ children }) {
   const [search, setSearch] = useState('');
+  const [operator, setOperator] = useState(0);
+  const [filterColumn, setFilterColumn] = useState('population');
+  const [filterOperator, setFilterOperator] = useState('maior que');
 
-  const values = {
+  const values = useMemo(() => ({
     search,
     setSearch,
-  };
+    operator,
+    setOperator,
+    filterColumn,
+    setFilterColumn,
+    filterOperator,
+    setFilterOperator,
+  }), [search, operator, filterColumn, filterOperator]);
 
   return (
     <SearchContext.Provider value={ values }>

@@ -3,7 +3,14 @@ import { TableContext } from '../context/TableProvider';
 import { SearchContext } from '../context/SearchProvider';
 
 function Table() {
-  const { isLoading, gitRepo, fetchData } = useContext(TableContext);
+  const {
+    isLoading,
+    gitRepo,
+    fetchData,
+    setGitRepoFiltred,
+    repoFiltredNumber,
+    isFiltred,
+  } = useContext(TableContext);
   const { search } = useContext(SearchContext);
 
   useEffect(() => {
@@ -11,7 +18,7 @@ function Table() {
   }, []);
 
   if (isLoading) return <h1>Loading...</h1>;
-  if (search.length === 0) {
+  if (isFiltred === true && repoFiltredNumber.length > 0) {
     return (
       <div>
         <table>
@@ -33,7 +40,8 @@ function Table() {
             </tr>
           </thead>
           {gitRepo.length === 0
-            ? '' : (gitRepo).map((planet, index) => {
+            ? '' : (repoFiltredNumber).filter((repo) => repo.name
+              .includes(search)).map((planet, index) => {
               const {
                 name,
                 diameter,
@@ -92,6 +100,7 @@ function Table() {
         {gitRepo.length === 0
           ? '' : (gitRepo).filter((repo) => repo.name
             .includes(search)).map((planet, index) => {
+            setGitRepoFiltred(search);
             const {
               name,
               diameter,
