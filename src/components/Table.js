@@ -7,9 +7,7 @@ function Table() {
     isLoading,
     gitRepo,
     fetchData,
-    setGitRepoFiltred,
-    repoFiltredNumber,
-    isFiltred,
+    setGitRepo,
   } = useContext(TableContext);
   const { search } = useContext(SearchContext);
 
@@ -18,7 +16,7 @@ function Table() {
   }, []);
 
   if (isLoading) return <h1>Loading...</h1>;
-  if (isFiltred === true && repoFiltredNumber.length > 0) {
+  /* if (isFiltred === true && repoFiltredNumber.length > 0) {
     return (
       <div>
         <table>
@@ -77,7 +75,7 @@ function Table() {
         </table>
       </div>
     );
-  } return (
+  } */ return (
     <div>
       <table>
         <thead>
@@ -97,42 +95,40 @@ function Table() {
             <th>URL</th>
           </tr>
         </thead>
-        {gitRepo.length === 0
-          ? '' : (gitRepo).filter((repo) => repo.name
-            .includes(search)).map((planet, index) => {
-            setGitRepoFiltred(search);
-            const {
-              name,
-              diameter,
-              climate,
-              gravity,
-              terrain,
-              population,
-              films,
-              created,
-              edited,
-              url,
-            } = planet;
-            return (
-              <tbody key={ index }>
-                <tr>
-                  <td>{ name }</td>
-                  <td>{ planet.rotation_period }</td>
-                  <td>{ planet.orbital_period }</td>
-                  <td>{ diameter }</td>
-                  <td>{ climate }</td>
-                  <td>{ gravity }</td>
-                  <td>{ terrain }</td>
-                  <td>{ planet.surface_water }</td>
-                  <td>{ population }</td>
-                  <td>{ films }</td>
-                  <td>{ created }</td>
-                  <td>{ edited }</td>
-                  <td>{ url }</td>
-                </tr>
-              </tbody>
-            );
-          })}
+        {(gitRepo).filter((repo) => repo.name
+          .includes(search)).map((planet, index) => {
+          const {
+            name,
+            diameter,
+            climate,
+            gravity,
+            terrain,
+            population,
+            films,
+            created,
+            edited,
+            url,
+          } = planet;
+          return (
+            <tbody key={ index }>
+              <tr>
+                <td>{ name }</td>
+                <td>{ planet.rotation_period }</td>
+                <td>{ planet.orbital_period }</td>
+                <td>{ diameter }</td>
+                <td>{ climate }</td>
+                <td>{ gravity }</td>
+                <td>{ terrain }</td>
+                <td>{ planet.surface_water }</td>
+                <td>{ population }</td>
+                <td>{ films }</td>
+                <td>{ created }</td>
+                <td>{ edited }</td>
+                <td>{ url }</td>
+              </tr>
+            </tbody>
+          );
+        })}
       </table>
     </div>
   );

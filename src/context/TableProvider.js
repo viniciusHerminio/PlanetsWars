@@ -7,7 +7,6 @@ export const TableContext = createContext();
 function TableProvider({ children }) {
   const [isLoading, setIsLoading] = useState(false);
   const [gitRepo, setGitRepo] = useState([]);
-  const [gitRepoFiltred, setGitRepoFiltred] = useState('');
   const [repoFiltredNumber, setRepoFiltredNumer] = useState([]);
   const [isFiltred, setIsFiltred] = useState(false);
 
@@ -27,13 +26,12 @@ function TableProvider({ children }) {
     isLoading,
     fetchData,
     gitRepo,
-    gitRepoFiltred,
-    setGitRepoFiltred,
     setRepoFiltredNumer,
     repoFiltredNumber,
     isFiltred,
     setIsFiltred,
-  }), [isLoading, gitRepo, gitRepoFiltred, repoFiltredNumber, isFiltred]);
+    setGitRepo,
+  }), [isLoading, gitRepo, repoFiltredNumber, isFiltred]);
 
   return (
     <TableContext.Provider value={ values }>

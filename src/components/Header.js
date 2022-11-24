@@ -16,8 +16,7 @@ function Header() {
 
   const {
     gitRepo,
-    setRepoFiltredNumer,
-    setIsFiltred,
+    setGitRepo,
   } = useContext(TableContext);
 
   const filterNumber = () => {
@@ -27,22 +26,21 @@ function Header() {
         repo[filterColumn],
       ) > Number(operator));
       console.log(filter);
-      setRepoFiltredNumer(filter);
+      setGitRepo(filter);
       console.log('maior que');
     } else if (filterOperator === 'menor que') {
       const filter = gitRepo.filter((repo) => Number(
         repo[filterColumn],
       ) < Number(operator));
-      setRepoFiltredNumer(filter);
+      setGitRepo(filter);
       console.log('menor que');
     } else if (filterOperator === 'igual a') {
       const filter = gitRepo.filter((repo) => Number(
         repo[filterColumn],
       ) === Number(operator));
-      setRepoFiltredNumer(filter);
+      setGitRepo(filter);
       console.log('igual a');
     }
-    setIsFiltred(true);
   };
 
   return (
