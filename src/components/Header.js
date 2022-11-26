@@ -12,6 +12,10 @@ function Header() {
     setFilterOperator,
     filterColumn,
     setFilterColumn,
+    filters,
+    setFilters,
+    setListColumns,
+    listColumns,
   } = useContext(SearchContext);
 
   const {
@@ -19,22 +23,46 @@ function Header() {
     setGitRepo,
   } = useContext(TableContext);
 
+  const selectFilters = (option) => {
+    const filtersSelect = listColumns.filter((column) => column !== option);
+    setFilterColumn(filtersSelect[0]);
+    return setListColumns(filtersSelect);
+  };
+
   const filterNumber = () => {
     if (filterOperator === 'maior que') {
       const filter = gitRepo.filter((repo) => Number(
         repo[filterColumn],
       ) > Number(operator));
       setGitRepo(filter);
+      setFilters([...filters, {
+        filterColumn,
+        filterOperator,
+        operator,
+      }]);
+      selectFilters(filterColumn);
     } else if (filterOperator === 'menor que') {
       const filter = gitRepo.filter((repo) => Number(
         repo[filterColumn],
       ) < Number(operator));
       setGitRepo(filter);
+      setFilters([...filters, {
+        filterColumn,
+        filterOperator,
+        operator,
+      }]);
+      selectFilters(filterColumn);
     } else if (filterOperator === 'igual a') {
       const filter = gitRepo.filter((repo) => Number(
         repo[filterColumn],
       ) === Number(operator));
       setGitRepo(filter);
+      setFilters([...filters, {
+        filterColumn,
+        filterOperator,
+        operator,
+      }]);
+      selectFilters(filterColumn);
     }
   };
 
@@ -54,11 +82,7 @@ function Header() {
             onChange={ (e) => setFilterColumn(e.target.value) }
             data-testid="column-filter"
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {listColumns.map((column) => <option key={ column }>{ column }</option>)}
           </select>
         </label>
         <label htmlFor="filterOperator">
@@ -87,6 +111,17 @@ function Header() {
           FILTRAR
 
         </button>
+      </div>
+      <div>
+        {(filterColumn !== undefined
+          ? filters.map((filter, index) => (
+            <h4 key={ index }>
+              {filter.filterColumn}
+              {' '}
+              {filter.filterOperator}
+              {' '}
+              {filter.operator}
+            </h4>)) : '')}
       </div>
     </div>
   );

@@ -8,6 +8,16 @@ function SearchProvider({ children }) {
   const [operator, setOperator] = useState(0);
   const [filterColumn, setFilterColumn] = useState('population');
   const [filterOperator, setFilterOperator] = useState('maior que');
+  const [filters, setFilters] = useState([]);
+  const [listColumns, setListColumns] = useState(
+    [
+      'population',
+      'diameter',
+      'orbital_period',
+      'rotation_period',
+      'surface_water',
+    ],
+  );
 
   const values = useMemo(() => ({
     search,
@@ -18,7 +28,18 @@ function SearchProvider({ children }) {
     setFilterColumn,
     filterOperator,
     setFilterOperator,
-  }), [search, operator, filterColumn, filterOperator]);
+    filters,
+    setFilters,
+    listColumns,
+    setListColumns,
+  }), [
+    search,
+    operator,
+    filterColumn,
+    filterOperator,
+    filters,
+    listColumns,
+  ]);
 
   return (
     <SearchContext.Provider value={ values }>
