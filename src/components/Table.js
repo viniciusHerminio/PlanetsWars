@@ -52,7 +52,7 @@ function Table() {
           return (
             <tbody key={ index }>
               <tr>
-                <td>{ name }</td>
+                <td data-testid="namePlanet">{ name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
                 <td>{ diameter }</td>
