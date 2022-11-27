@@ -18,6 +18,7 @@ function SearchProvider({ children }) {
       'surface_water',
     ],
   );
+  const [disabled, setDisabled] = useState(false);
 
   const values = useMemo(() => ({
     search,
@@ -32,6 +33,8 @@ function SearchProvider({ children }) {
     setFilters,
     listColumns,
     setListColumns,
+    disabled,
+    setDisabled,
   }), [
     search,
     operator,
@@ -39,6 +42,7 @@ function SearchProvider({ children }) {
     filterOperator,
     filters,
     listColumns,
+    disabled,
   ]);
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SearchContext } from '../context/SearchProvider';
 import { TableContext } from '../context/TableProvider';
 
@@ -16,12 +16,18 @@ function Header() {
     setFilters,
     setListColumns,
     listColumns,
+    disabled,
+    setDisabled,
   } = useContext(SearchContext);
 
   const {
     gitRepo,
     setGitRepo,
   } = useContext(TableContext);
+
+  useEffect(() => {
+    setFilterColumn(listColumns[0]);
+  }, [listColumns]);
 
   const selectFilters = (option) => {
     const filtersSelect = listColumns.filter((column) => column !== option);
@@ -66,6 +72,21 @@ function Header() {
     }
   };
 
+  const buttonDelete = (
+    Col,
+    filterOp,
+    op,
+  ) => {
+    console.log(Col);
+    console.log(filterOp);
+    console.log(op);
+    setDisabled(false);
+    const columnsAtt = [...listColumns, Col];
+    setListColumns(columnsAtt);
+    const filtersAtt = filters.filter((filter) => filter.filterColumn !== Col);
+    setFilters(filtersAtt);
+  };
+
   return (
     <div>
       <h1>Projeto Star Wars - Trybe</h1>
@@ -107,6 +128,7 @@ function Header() {
           type="button"
           onClick={ () => filterNumber() }
           data-testid="button-filter"
+          disabled={ disabled }
         >
           FILTRAR
 
@@ -114,14 +136,51 @@ function Header() {
       </div>
       <div>
         {(filterColumn !== undefined
-          ? filters.map((filter, index) => (
-            <h4 key={ index }>
-              {filter.filterColumn}
-              {' '}
-              {filter.filterOperator}
-              {' '}
-              {filter.operator}
-            </h4>)) : '')}
+          ? filters.map((filter) => (
+            <div key={ filter.filterColumn }>
+              <h4>
+                {filter.filterColumn}
+                {' '}
+                {filter.filterOperator}
+                {' '}
+                {filter.operator}
+              </h4>
+              {setDisabled(false)}
+              <button
+                type="button"
+                onClick={ () => buttonDelete(
+                  filter.filterColumn,
+                  filter.filterOperator,
+                  filter.operator,
+                ) }
+              >
+                Delete
+
+              </button>
+            </div>
+          )) : filters.map((filter) => (
+            <div key={ filter.filterColumn }>
+              <h4>
+                {filter.filterColumn}
+                {' '}
+                {filter.filterOperator}
+                {' '}
+                {filter.operator}
+              </h4>
+              {setDisabled(true)}
+              <button
+                type="button"
+                onClick={ () => buttonDelete(
+                  filter.filterColumn,
+                  filter.filterOperator,
+                  filter.operator,
+                ) }
+              >
+                Delete
+
+              </button>
+            </div>))
+        )}
       </div>
     </div>
   );
