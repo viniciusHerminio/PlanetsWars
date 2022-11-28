@@ -16,7 +16,7 @@ function TableProvider({ children }) {
       const result = await fecthAPI();
       setGitRepo(result);
     } catch (error) {
-      console.log(error);
+      return error;
     } finally {
       setIsLoading(false);
     }

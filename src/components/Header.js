@@ -27,7 +27,6 @@ function Header() {
   } = useContext(TableContext);
 
   const filterAtt = async (filtersAtt) => {
-    console.log(filtersAtt);
     const fetch = await fecthAPI();
     filtersAtt.map((filter) => {
       if (filter.filterOperator === 'maior que') {
@@ -96,12 +95,8 @@ function Header() {
     }
   };
 
-  const unfilter = async (Col, filterOp, op, filtersAtt) => {
-    console.log(Col);
-    console.log(filterOp);
-    console.log(op);
+  const unfilter = async (filtersAtt) => {
     const fetch = await fecthAPI();
-    console.log(fetch);
     setGitRepo(fetch);
     filterAtt(filtersAtt);
   };
@@ -114,18 +109,13 @@ function Header() {
 
   const buttonDelete = (
     Col,
-    filterOp,
-    op,
   ) => {
-    console.log(Col);
-    console.log(filterOp);
-    console.log(op);
     setDisabled(false);
     const columnsAtt = [...listColumns, Col];
     setListColumns(columnsAtt);
     const filtersAtt = filters.filter((filter) => filter.filterColumn !== Col);
     setFilters(filtersAtt);
-    unfilter(Col, filterOp, op, filtersAtt);
+    unfilter(filtersAtt);
   };
 
   return (
@@ -205,7 +195,7 @@ function Header() {
               </button>
             </div>
           )) : filters.map((filterr) => (
-            <div data-testid="filter" key={ filter.filterColumn }>
+            <div data-testid="filter" key={ filterr.filterColumn }>
               <h4>
                 {filterr.filterColumn}
                 {' '}
