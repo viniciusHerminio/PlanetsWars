@@ -187,8 +187,6 @@ function Header() {
                 type="button"
                 onClick={ () => buttonDelete(
                   filter.filterColumn,
-                  filter.filterOperator,
-                  filter.operator,
                 ) }
               >
                 Delete
@@ -208,8 +206,6 @@ function Header() {
                 type="button"
                 onClick={ () => buttonDelete(
                   filterr.filterColumn,
-                  filterr.filterOperator,
-                  filterr.operator,
                 ) }
               >
                 Delete
