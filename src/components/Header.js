@@ -34,7 +34,6 @@ function Header() {
         const filterAt = fetch.filter((repo) => Number(
           repo[filter.filterColumn],
         ) > Number(filter.operator) || repo[filter.filterColumn] === 'unknown');
-        console.log('segunda');
         return setGitRepo(filterAt);
       } if (filter.filterOperator === 'menor que') {
         const filterAt = fetch.filter((repo) => Number(
@@ -46,7 +45,7 @@ function Header() {
           repo[filter.filterColumn],
         ) === Number(filter.operator) || repo[filter.filterColumn] === 'unknown');
         return setGitRepo(filterAt);
-      }
+      } return console.log('olá');
     });
   };
 
@@ -205,22 +204,22 @@ function Header() {
                 Delete
               </button>
             </div>
-          )) : filters.map((filter) => (
+          )) : filters.map((filterr) => (
             <div data-testid="filter" key={ filter.filterColumn }>
               <h4>
-                {filter.filterColumn}
+                {filterr.filterColumn}
                 {' '}
-                {filter.filterOperator}
+                {filterr.filterOperator}
                 {' '}
-                {filter.operator}
+                {filterr.operator}
               </h4>
               {setDisabled(true)}
               <button
                 type="button"
                 onClick={ () => buttonDelete(
-                  filter.filterColumn,
-                  filter.filterOperator,
-                  filter.operator,
+                  filterr.filterColumn,
+                  filterr.filterOperator,
+                  filterr.operator,
                 ) }
               >
                 Delete
