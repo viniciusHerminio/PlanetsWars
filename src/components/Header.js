@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { SearchContext } from '../context/SearchProvider';
 import { TableContext } from '../context/TableProvider';
+import fecthAPI from '../services/fetchApi';
 
 function Header() {
   const {
@@ -24,6 +25,30 @@ function Header() {
     gitRepo,
     setGitRepo,
   } = useContext(TableContext);
+
+  const filterAtt = async (filtersAtt) => {
+    console.log(filtersAtt);
+    const fetch = await fecthAPI();
+    filtersAtt.map((filter) => {
+      if (filter.filterOperator === 'maior que') {
+        const filterAt = fetch.filter((repo) => Number(
+          repo[filter.filterColumn],
+        ) > Number(filter.operator) || repo[filter.filterColumn] === 'unknown');
+        console.log('segunda');
+        return setGitRepo(filterAt);
+      } if (filter.filterOperator === 'menor que') {
+        const filterAt = fetch.filter((repo) => Number(
+          repo[filter.filterColumn],
+        ) < Number(filter.operator) || repo[filter.filterColumn] === 'unknown');
+        return setGitRepo(filterAt);
+      } if (filter.filterOperator === 'igual a') {
+        const filterAt = fetch.filter((repo) => Number(
+          repo[filter.filterColumn],
+        ) === Number(filter.operator) || repo[filter.filterColumn] === 'unknown');
+        return setGitRepo(filterAt);
+      }
+    });
+  };
 
   useEffect(() => {
     setFilterColumn(listColumns[0]);
@@ -72,6 +97,22 @@ function Header() {
     }
   };
 
+  const unfilter = async (Col, filterOp, op, filtersAtt) => {
+    console.log(Col);
+    console.log(filterOp);
+    console.log(op);
+    const fetch = await fecthAPI();
+    console.log(fetch);
+    setGitRepo(fetch);
+    filterAtt(filtersAtt);
+  };
+
+  const clearFilters = async () => {
+    setFilters([]);
+    const repoAtt = await fecthAPI();
+    setGitRepo(repoAtt);
+  };
+
   const buttonDelete = (
     Col,
     filterOp,
@@ -85,6 +126,7 @@ function Header() {
     setListColumns(columnsAtt);
     const filtersAtt = filters.filter((filter) => filter.filterColumn !== Col);
     setFilters(filtersAtt);
+    unfilter(Col, filterOp, op, filtersAtt);
   };
 
   return (
@@ -131,13 +173,19 @@ function Header() {
           disabled={ disabled }
         >
           FILTRAR
-
+        </button>
+        <button
+          type="button"
+          onClick={ () => clearFilters() }
+          data-testid="button-remove-filters"
+        >
+          Remover Filtros
         </button>
       </div>
       <div>
         {(filterColumn !== undefined
           ? filters.map((filter) => (
-            <div key={ filter.filterColumn }>
+            <div data-testid="filter" key={ filter.filterColumn }>
               <h4>
                 {filter.filterColumn}
                 {' '}
@@ -155,11 +203,10 @@ function Header() {
                 ) }
               >
                 Delete
-
               </button>
             </div>
           )) : filters.map((filter) => (
-            <div key={ filter.filterColumn }>
+            <div data-testid="filter" key={ filter.filterColumn }>
               <h4>
                 {filter.filterColumn}
                 {' '}
@@ -177,7 +224,6 @@ function Header() {
                 ) }
               >
                 Delete
-
               </button>
             </div>))
         )}
@@ -185,5 +231,4 @@ function Header() {
     </div>
   );
 }
-
 export default Header;
