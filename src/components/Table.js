@@ -52,7 +52,7 @@ function Table() {
           } = planet;
           return (
             <tbody key={ index }>
-              <tr className="table-secondary">
+              <tr className="table-secondary opacity-75">
                 <td data-testid="namePlanet">{ name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>

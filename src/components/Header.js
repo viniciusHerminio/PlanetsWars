@@ -122,7 +122,7 @@ function Header() {
   return (
     <div className="p-5">
       <div className="d-flex align-items-center flex-column mb-3">
-        <h1>PlanetsWars</h1>
+        <h1 className="text-light">PlanetsWars</h1>
         <input
           value={ search }
           onChange={ (e) => setSearch(e.target.value) }
