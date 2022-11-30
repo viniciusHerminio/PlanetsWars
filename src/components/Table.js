@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { TableContext } from '../context/TableProvider';
 import { SearchContext } from '../context/SearchProvider';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Table() {
   const {
@@ -16,9 +17,9 @@ function Table() {
 
   if (isLoading) return <h1>Loading...</h1>;
   return (
-    <div>
-      <table>
-        <thead>
+    <div className="p-5">
+      <table className="table">
+        <thead className="table table-dark table-hover">
           <tr>
             <th>Name</th>
             <th>Rotation Period</th>
@@ -51,7 +52,7 @@ function Table() {
           } = planet;
           return (
             <tbody key={ index }>
-              <tr>
+              <tr className="table-secondary">
                 <td data-testid="namePlanet">{ name }</td>
                 <td>{ planet.rotation_period }</td>
                 <td>{ planet.orbital_period }</td>
