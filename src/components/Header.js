@@ -186,9 +186,9 @@ function Header() {
             <div
               data-testid="filter"
               key={ filter.filterColumn }
-              className="d-flex mt-4"
+              className="d-flex mt-4 "
             >
-              <h4 className="me-3">
+              <h4 className="me-3 text-light">
                 {filter.filterColumn}
                 {' '}
                 {filter.filterOperator}
